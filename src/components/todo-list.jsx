@@ -109,7 +109,7 @@ export default function TodoList() {
             onClick={handleFilter}
             value={"all"}
             className={`px-4 py-2 rounded-md ${
-              activeFilter === "all" ? "bg-blue-200" : ""
+              activeFilter === "all" ? "bg-sky-200" : ""
             }`}
           >
             All
@@ -119,7 +119,7 @@ export default function TodoList() {
             onClick={handleFilter}
             value={"completed"}
             className={`px-4 py-2 rounded-md ${
-              activeFilter === "completed" ? "bg-blue-200" : ""
+              activeFilter === "completed" ? "bg-sky-200" : ""
             }`}
           >
             Completed
@@ -136,7 +136,7 @@ export default function TodoList() {
           </button>
         </nav>
 
-        <div className="border lg:rounded-md bg-blue-200 mt-4 mb-10  lg:mx-96">
+        <div className="border lg:rounded-md bg-sky-200 mt-4 mb-10  lg:mx-96">
           <ul className="grid grid-cols-1 px-4 py-2 m-2">
             {todos !== null &&
               todos.map((res, index) => {
@@ -147,7 +147,7 @@ export default function TodoList() {
                   >
                     <div key={index} className="flex gap-2">
                       <span className={`${res.status ? "line-through" : ""}`}>
-                        {res.name}
+                        {index + 1 + ".\t" }{res.name}
                       </span>
                     </div>
                     <div className="flex gap-4">
