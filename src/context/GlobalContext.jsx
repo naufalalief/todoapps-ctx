@@ -17,7 +17,7 @@ export const GlobalProvider = (props) => {
   useEffect(() => {
     if (fetchStatus === true) {
       axios
-        .get("https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo")
+        .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos")
         .then((response) => {
           setTodos(response.data);
           setTotal(response.data.length);
@@ -25,19 +25,6 @@ export const GlobalProvider = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          if (error.response && error.response.status === 429) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Too many requests!",
-            });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-            });
-          }
         });
     }
     setFetchStatus(false);
@@ -64,7 +51,7 @@ export const GlobalProvider = (props) => {
 
     if (currentId === -1) {
       axios
-        .post("https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo", {
+        .post("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos", {
           name,
         })
         .then((response) => {
@@ -83,7 +70,7 @@ export const GlobalProvider = (props) => {
     } else {
       axios
         .put(
-          `https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo/${currentId}`,
+          `https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${currentId}`,
           {
             name,
           }
@@ -112,8 +99,7 @@ export const GlobalProvider = (props) => {
     setInput({ name: "" });
   };
 
-  const handleDelete = (event) => {
-    let id = parseInt(event.target.value);
+  const handleDelete = (id) => {
     console.log(id);
 
     if (currentId === id) {
@@ -134,7 +120,7 @@ export const GlobalProvider = (props) => {
       if (result.isConfirmed) {
         axios
           .delete(
-            `https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo/${id}`
+            `https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${id}`
           )
           .then((response) => {
             setFetchStatus(true);
@@ -149,8 +135,7 @@ export const GlobalProvider = (props) => {
     });
   };
 
-  const handleEdit = (event) => {
-    let id = parseInt(event.target.value);
+  const handleEdit = (id) => {
     setCurrentId(id);
     navigate(`/${id}`);
   };
@@ -158,7 +143,7 @@ export const GlobalProvider = (props) => {
   const getCompletedTodos = () => {
     axios
       .get(
-        "https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo?status=true"
+        "https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=true"
       )
       .then((response) => {
         setTodos(response.data);
@@ -172,7 +157,7 @@ export const GlobalProvider = (props) => {
   const getActiveTodos = () => {
     axios
       .get(
-        "https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo?status=false"
+        "https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=false"
       )
       .then((response) => {
         setTodos(response.data);
@@ -193,7 +178,7 @@ export const GlobalProvider = (props) => {
     const status = event.target.checked;
 
     axios
-      .put(`https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo/${id}`, {
+      .put(`https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${id}`, {
         status: status,
       })
       .then((response) => {

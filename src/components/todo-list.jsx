@@ -2,7 +2,8 @@ import { useContext, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { TbHttpDelete, TbEdit } from "react-icons/tb";
+import { TbEdit, TbHttpDelete } from "react-icons/tb";
+import { PiGithubLogoDuotone } from "react-icons/pi";
 export default function TodoList() {
   const { states, eventHandlers } = useContext(GlobalContext);
   const { id } = useParams();
@@ -29,7 +30,7 @@ export default function TodoList() {
   useEffect(() => {
     if (id !== undefined) {
       axios
-        .get(`https://6538d282a543859d1bb1fc0c.mockapi.io/api/v1/todo/${id}`)
+        .get(`https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${id}`)
         .then((response) => {
           let data = response.data;
           setInput({ name: data.name });
@@ -44,10 +45,21 @@ export default function TodoList() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="flex flex-col justify-center items-center mt-10 mb-4 border lg:rounded-md lg:mx-96">
-          <h1 className="mb-4">Whatcha Gonna Do?</h1>
-          <form onSubmit={handleSubmit} className="flex gap-2 my-4">
+      <div className="fixed bottom-5 right-5 z-10 lg:right-0 lg:top-0 px-4 py-2 font-mono bg-violet-200 rounded-full">
+        <a
+          href="https://github.com/naufalalief/todoapps-ctx"
+          target="_blank"
+        >
+          <PiGithubLogoDuotone size={50} />
+        </a>
+      </div>
+      <div className="container-fluid font-mono lg:w-[70vw] mx-auto">
+        <div className="flex flex-col justify-center items-center mt-10 mb-4 mx-2 border lg:rounded-md lg:mx-96 ">
+          <h1 className="mt-10 mb-4 font-bold text-2xl">Whatcha Gonna Do?</h1>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col lg:flex-row gap-2 my-4"
+          >
             <input
               type="text"
               className="border rounded-md px-4 py-2"
@@ -56,14 +68,14 @@ export default function TodoList() {
               onChange={handleInput}
             />
             <button
-              className="bg-blue-200 border rounded-md px-4 py-2"
+              className="bg-sky-200 border rounded-md px-4 py-2"
               type="submit"
             >
               Add
             </button>
             {currentId !== -1 && (
               <button
-                className="bg-blue-200 border rounded-md px-4 py-2"
+                className="bg-red-200 border rounded-md px-4 py-2"
                 onClick={handleCancel}
               >
                 Cancel
@@ -72,7 +84,7 @@ export default function TodoList() {
           </form>
         </div>
 
-        <nav className="flex justify-center items-center gap-10 my-4 border lg:rounded-md py-2 px-4 m-2 lg:mx-96">
+        <nav className="flex justify-center items-center gap-10 my-4 border lg:rounded-md py-2 px-4 mx-2 lg:mx-96">
           <button
             onClick={handleFilter}
             value={"all"}
@@ -97,7 +109,7 @@ export default function TodoList() {
             onClick={handleFilter}
             value={"active"}
             className={`px-4 py-2 rounded-md ${
-              activeFilter === "active" ? "bg-blue-200" : ""
+              activeFilter === "active" ? "bg-sky-200" : ""
             }`}
           >
             Active
@@ -109,8 +121,11 @@ export default function TodoList() {
             {todos !== null &&
               todos.map((res, index) => {
                 return (
-                  <li key={index} className="flex justify-between items-center m-2">
-                    <div key={index}>
+                  <li
+                    key={index}
+                    className="flex justify-between items-center m-2 border border-black px-4 py-2"
+                  >
+                    <div key={index} className="flex gap-2">
                       <input
                         type="checkbox"
                         name=""
@@ -118,18 +133,18 @@ export default function TodoList() {
                         value={res.id}
                         checked={res.status}
                         onChange={handleComplete}
-                        className="w-4"
+                        className="w-5"
                       />
                       <span className={`${res.status ? "line-through" : ""}`}>
                         {res.name}
                       </span>
                     </div>
                     <div className="flex gap-4">
-                      <button value={res.id} onClick={handleDelete}>
-                        <TbHttpDelete size={30}/>
+                      <button onClick={() => handleDelete(res.id)}>
+                        <TbHttpDelete size={30} />
                       </button>
-                      <button value={res.id} onClick={handleEdit}>
-                        <TbEdit size={30}/>
+                      <button onClick={() => handleEdit(res.id)}>
+                        <TbEdit size={30} />
                       </button>
                     </div>
                   </li>
