@@ -56,7 +56,7 @@ export default function TodoList() {
             <p>meow~</p>
           </div>
         </div>
-        <div className=" bg-violet-200 rounded-full px-4 py-2">
+        <div className=" bg-sky-200 rounded-full px-4 py-2">
           <a
             href="https://github.com/naufalalief/todoapps-ctx"
             target="_blank"
@@ -153,7 +153,7 @@ export default function TodoList() {
                         value={res.id}
                         checked={res.status}
                         onChange={handleComplete}
-                        className="w-5"
+                        className="w-10"
                       />
                       <span className={`${res.status ? "line-through" : ""}`}>
                         {res.name}
@@ -173,7 +173,7 @@ export default function TodoList() {
           </ul>
         </div>
       </div>
-      <div className="fixed bg-sky-300 w-full bottom-0 left-0 p-2">
+      <div className="fixed bg-sky-200 w-full bottom-0 left-0 p-2">
         <p>Total: {total}</p>
       </div>
     </>
