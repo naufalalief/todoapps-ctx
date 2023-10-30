@@ -198,14 +198,15 @@ export const GlobalProvider = (props) => {
           Swal.fire({
             icon: "success",
             title: "Success!",
-            text: "Todo removed from completed!",
+            text: `Todo ${response.data.name} removed from completed!`,
           });
           getCompletedTodos();
         } else if (activeFilter === "active") {
           Swal.fire({
             icon: "success",
             title: "Success!",
-            text: "Todo added to completed!",
+            text: `Todo ${response.data.name} added to completed!`,
+
           });
           getActiveTodos();
         } else {
