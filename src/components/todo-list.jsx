@@ -46,7 +46,7 @@ export default function TodoList() {
 
   return (
     <>
-      <div className="fixed bottom-0 right-0 lg:bottom-5 lg:right-5 z-10 px-4 py-2 font-mono">
+      <div className="fixed bottom-0 right-0 lg:right-5 z-10 px-4 py-2 font-mono">
         <div className="absolute right-24 bottom-16">
           <div
             className={`"bg-white rounded-lg border border-gray-300 px-4 py-2" ${
@@ -74,7 +74,7 @@ export default function TodoList() {
         </div>
       </div>
       <div className="container-fluid font-mono lg:w-[70vw] mx-auto">
-        <div className="flex flex-col justify-center items-center mt-10 mb-4 mx-2 border lg:rounded-md lg:mx-96 ">
+        <div className="flex flex-col justify-center items-center mt-2 mb-4 mx-2 border lg:rounded-md lg:mx-96 ">
           <h1 className="mt-10 mb-4 font-bold text-2xl">Whatcha Gonna Do?</h1>
           <form
             onSubmit={handleSubmit}
@@ -154,7 +154,7 @@ export default function TodoList() {
                       <button
                         onClick={() => handleComplete(res.id, res.status)}
                       >
-                        <TbCheck  size={30}/>
+                        <TbCheck size={30} />
                       </button>
                       <button onClick={() => handleDelete(res.id)}>
                         <TbHttpDelete size={30} />
