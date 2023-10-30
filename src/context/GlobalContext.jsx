@@ -72,6 +72,11 @@ export const GlobalProvider = (props) => {
           name,
         })
         .then((response) => {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Todo successfully edited!",
+          });
           setFetchStatus(true);
           navigate("/");
         })
