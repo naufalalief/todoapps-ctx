@@ -133,34 +133,52 @@ export const GlobalProvider = (props) => {
     setCurrentId(id);
     navigate(`/${id}`);
   };
+  const getActiveTodos = () => {
+    axios
+      .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos")
+      .then((response) => {
+        setTodos(response.data.filter((todo) => todo.status === false));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const getCompletedTodos = () => {
     axios
-      .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=true")
+      .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos")
       .then((response) => {
-        setTodos(response.data);
-        setTotal(response.data.length);
+        setTodos(response.data.filter((todo) => todo.status === true));
       })
       .catch((error) => {
         console.log(error);
       });
   };
+  const handleFilter = (event) => {
+    let filter = event.target.value.toLowerCase();
+    setActiveFilter(filter);
 
-  const getActiveTodos = () => {
-    axios
-      .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=false")
-      .then((response) => {
-        setTodos(response.data);
-        setTotal(response.data.length);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const removeTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-    setTotal(total - 1);
+    if (filter === "all") {
+      setFetchStatus(true);
+    } else if (filter === "completed") {
+      axios
+        .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos")
+        .then((response) => {
+          setTodos(response.data.filter((todo) => todo.status === true));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      axios
+        .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos")
+        .then((response) => {
+          setTodos(response.data.filter((todo) => todo.status === false));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const handleComplete = (id, currentStatus) => {
@@ -171,54 +189,17 @@ export const GlobalProvider = (props) => {
         status: status,
       })
       .then((response) => {
-        setFetchStatus(true);
-        if (activeFilter === "all") {
-          setFetchStatus(true);
-        } else if (activeFilter === "completed") {
+        if (activeFilter === "completed") {
           getCompletedTodos();
-        } else {
+        } else if (activeFilter === "active") {
           getActiveTodos();
-          if (status === true) {
-            removeTodo(id);
-          }
+        } else {
+          setFetchStatus(true);
         }
       })
       .catch((error) => {
         console.log(error);
       });
-
-    // menampilkan data kosong ketika data pada filter sudah habis atau kosong
-    if (
-      activeFilter === "active" &&
-      todos.filter((todo) => todo.status === false).length === 1
-    ) {
-      setTodos([]);
-      setTotal(0);
-    } else {
-      setTodos([]);
-      setTotal(0);
-    }
-  };
-
-  const handleFilter = (f) => {
-    let filter = f.target.value.toLowerCase();
-
-    setActiveFilter(filter);
-
-    if (filter === "all") {
-      setFetchStatus(true);
-    } else if (filter === "completed") {
-      getCompletedTodos();
-    } else {
-      getActiveTodos();
-      if (activeFilter === "active") {
-        setTodos(todos.filter((todo) => todo.status === false));
-        setTotal(todos.filter((todo) => todo.status === false).length);
-      } else if (activeFilter === "completed" && filter === "active") {
-        setTodos(todos.filter((todo) => todo.status === true));
-        setTotal(todos.filter((todo) => todo.status === true).length);
-      }
-    }
   };
 
   let states = {
