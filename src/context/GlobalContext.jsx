@@ -195,10 +195,25 @@ export const GlobalProvider = (props) => {
       })
       .then((response) => {
         if (activeFilter === "completed") {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Todo removed from completed!",
+          });
           getCompletedTodos();
         } else if (activeFilter === "active") {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Todo added to completed!",
+          });
           getActiveTodos();
         } else {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Todo status successfully changed!",
+          });
           setFetchStatus(true);
         }
       })
