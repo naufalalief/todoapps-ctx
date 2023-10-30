@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { TbEdit, TbHttpDelete } from "react-icons/tb";
+import { TbEdit, TbHttpDelete, TbCheck } from "react-icons/tb";
 import { PiGithubLogoDuotone } from "react-icons/pi";
 export default function TodoList() {
   const [hover, setHover] = useState(false);
@@ -146,20 +146,16 @@ export default function TodoList() {
                     className="flex justify-between items-center m-2 border border-black px-4 py-2"
                   >
                     <div key={index} className="flex gap-2">
-                      <input
-                        type="checkbox"
-                        name=""
-                        id=""
-                        value={res.id}
-                        checked={res.status}
-                        onChange={handleComplete}
-                        className="w-10"
-                      />
                       <span className={`${res.status ? "line-through" : ""}`}>
                         {res.name}
                       </span>
                     </div>
                     <div className="flex gap-4">
+                      <button
+                        onClick={() => handleComplete(res.id, res.status)}
+                      >
+                        <TbCheck  size={30}/>
+                      </button>
                       <button onClick={() => handleDelete(res.id)}>
                         <TbHttpDelete size={30} />
                       </button>

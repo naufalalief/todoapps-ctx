@@ -13,7 +13,6 @@ export const GlobalProvider = (props) => {
   const [input, setInput] = useState({ name: "" });
   const [total, setTotal] = useState(0);
   const [activeFilter, setActiveFilter] = useState("all");
-
   useEffect(() => {
     if (fetchStatus === true) {
       axios
@@ -69,12 +68,9 @@ export const GlobalProvider = (props) => {
         });
     } else {
       axios
-        .put(
-          `https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${currentId}`,
-          {
-            name,
-          }
-        )
+        .put(`https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${currentId}`, {
+          name,
+        })
         .then((response) => {
           setFetchStatus(true);
           navigate("/");
@@ -119,9 +115,7 @@ export const GlobalProvider = (props) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(
-            `https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${id}`
-          )
+          .delete(`https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${id}`)
           .then((response) => {
             setFetchStatus(true);
           })
@@ -142,9 +136,7 @@ export const GlobalProvider = (props) => {
 
   const getCompletedTodos = () => {
     axios
-      .get(
-        "https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=true"
-      )
+      .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=true")
       .then((response) => {
         setTodos(response.data);
         setTotal(response.data.length);
@@ -156,9 +148,7 @@ export const GlobalProvider = (props) => {
 
   const getActiveTodos = () => {
     axios
-      .get(
-        "https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=false"
-      )
+      .get("https://653fe3f545bedb25bfc1689d.mockapi.io/Todos?status=false")
       .then((response) => {
         setTodos(response.data);
         setTotal(response.data.length);
@@ -173,9 +163,8 @@ export const GlobalProvider = (props) => {
     setTotal(total - 1);
   };
 
-  const handleComplete = (event) => {
-    const id = parseInt(event.target.value);
-    const status = event.target.checked;
+  const handleComplete = (id, currentStatus) => {
+    const status = !currentStatus;
 
     axios
       .put(`https://653fe3f545bedb25bfc1689d.mockapi.io/Todos/${id}`, {
@@ -225,6 +214,9 @@ export const GlobalProvider = (props) => {
       if (activeFilter === "active") {
         setTodos(todos.filter((todo) => todo.status === false));
         setTotal(todos.filter((todo) => todo.status === false).length);
+      } else if (activeFilter === "completed" && filter === "active") {
+        setTodos(todos.filter((todo) => todo.status === true));
+        setTotal(todos.filter((todo) => todo.status === true).length);
       }
     }
   };
