@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { TbEdit, TbHttpDelete } from "react-icons/tb";
 import { PiGithubLogoDuotone } from "react-icons/pi";
 export default function TodoList() {
+  const [hover, setHover] = useState(false);
   const { states, eventHandlers } = useContext(GlobalContext);
   const { id } = useParams();
   const {
@@ -45,13 +46,32 @@ export default function TodoList() {
 
   return (
     <>
-      <div className="fixed bottom-5 right-5 z-10 lg:right-0 lg:top-0 px-4 py-2 font-mono bg-violet-200 rounded-full">
-        <a
-          href="https://github.com/naufalalief/todoapps-ctx"
-          target="_blank"
-        >
-          <PiGithubLogoDuotone size={50} />
-        </a>
+      <div className="fixed bottom-0 right-0 lg:bottom-5 lg:right-5 z-10 px-4 py-2 font-mono">
+        <div className="absolute right-24 bottom-16">
+          <div
+            className={`"bg-white rounded-lg border border-gray-300 px-4 py-2" ${
+              hover ? "block" : "hidden"
+            }`}
+          >
+            <p>meow~</p>
+          </div>
+        </div>
+        <div className=" bg-violet-200 rounded-full px-4 py-2">
+          <a
+            href="https://github.com/naufalalief/todoapps-ctx"
+            target="_blank"
+            className="relative"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            <PiGithubLogoDuotone size={50} />
+            <div
+              className={`absolute top-0 left-0 w-full h-full flex items-center justify-center ${
+                hover ? "block" : "hidden"
+              }`}
+            ></div>
+          </a>
+        </div>
       </div>
       <div className="container-fluid font-mono lg:w-[70vw] mx-auto">
         <div className="flex flex-col justify-center items-center mt-10 mb-4 mx-2 border lg:rounded-md lg:mx-96 ">
